@@ -40,14 +40,15 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -v -s --alluredir results
-            - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+        pytest test_pystore.py --alluredir=allure-results
+        continue-on-error:true
+    - name: Load test report history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.7
       if: always()
